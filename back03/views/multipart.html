@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="/">index로 이동 </a>
+    <h1>multipart</h1>
+    <p>여기에서 파일 업로드 가능</p>
+    <div>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="image">
+            <input type="text" name="title">
+            <button type="submit">파일업로드</button>
+        </form>    
+    </div>
+    <div>
+        <form action="/uploads" method="post" enctype="multipart/form-data">
+            <input type="file" name="many" multiple>
+            <input type="text" name="title">
+            <button type="submit">many파일업로드</button>
+        </form>    
+    </div>
+</body>
+</html>
