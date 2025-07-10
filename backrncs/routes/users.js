@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../schemas/users');
+const bcrypt = require('bcrypt');
 
 router.post('/register',async (req,res, next)=>{
     try{
         const {email,password,nickname} = req.body;
-        const user = new User({ email,password,nickname });
+        const hashed = bcrypt.hash(password, 10);
+        const user = new User({ email,password:hashed,nickname });
         const result = await user.save();
         return res.json(result);
     }catch(err){
@@ -37,10 +39,11 @@ router.put('/:id',async (req,res,next)=>{
     try {
         const {id} = req.params;
         const {nickname, email, password} = req.body;
+        const hashed = bcrypt.hash(password, 10);
 
         const updated = await User.findByIdAndUpdate(
             id,
-            {nickname, email, password},
+            {nickname, email, password:hashed},
             {new : true, runValidators: true}
         )
         if(!updated){
@@ -48,7 +51,7 @@ router.put('/:id',async (req,res,next)=>{
         }
         return res.json(updated);
     }catch(err){
-        
+
     }
 })
 
