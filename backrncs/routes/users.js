@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 router.post('/register',async (req,res, next)=>{
     try{
         const {email,password,nickname} = req.body;
-        const hashed = bcrypt.hash(password, 10);
+        const hashed = await bcrypt.hash(password, 10);
         const user = new User({ email,password:hashed,nickname });
         const result = await user.save();
         return res.json(result);
@@ -39,7 +39,7 @@ router.put('/:id',async (req,res,next)=>{
     try {
         const {id} = req.params;
         const {nickname, email, password} = req.body;
-        const hashed = bcrypt.hash(password, 10);
+        const hashed = await bcrypt.hash(password, 10);
 
         const updated = await User.findByIdAndUpdate(
             id,
