@@ -36,6 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 console.log('Express server started');
 
 require('dotenv').config();
+
 const mongo = require('./schemas');
 mongo();
 

@@ -22,6 +22,17 @@ router.get('/', async (req,res,next)=>{
     }
 })
 
+router.delete('/:id',async (req,res,next)=>{
+    try{
+        const {id} = req.params; // const id = req.params.id;
+        const deleted = await User.findByIdAndDelete(id);
+        return res.json(deleted);
+    }catch (e){
+        return res.status(500).json(e);
+    }
+
+})
+
 
 
 
