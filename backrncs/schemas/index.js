@@ -1,8 +1,5 @@
 const mongoose = require('mongoose');
-const {MONG_PASSWORD} = process.env;
-
-
-const mongo_url = `mongodb+srv://ssssssyyy0:${MONG_PASSWORD}@cluster0.e9rwnsx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
+const mongo_url = process.env.MONG_URL;
 
 const connect = () =>{
     mongoose.connect(mongo_url,{dbName:'rncs'})
