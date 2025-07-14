@@ -13,6 +13,8 @@ router.post('/login',async (req,res,next)=>{
         const isMatch = await bcrypt.compare(password, user.password);
         if(!isMatch){ return res.status(401).json({error:"password not match"}); }
 
+
+        // payload 는 보이는 데이터 !password 입력 X!
         const token = jwt.sign({
             userId : user.id,
             nickname : user.nickname,
