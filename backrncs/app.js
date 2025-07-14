@@ -43,9 +43,11 @@ mongo();
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const authRouter = require('./routes/auth');
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+app.use("/auth", authRouter);
 
 app.listen(3030, ()=>{
     console.log('server started on port 3030');
