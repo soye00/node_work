@@ -1,22 +1,31 @@
 const Sequelize = require('sequelize');
-const User = require('./User');
-const Comment = require('./Comment');
 
-const env = process.env.NODE_ENV || 'development';
-const config = require('../config/config')[env];
-const db = {};
+class Comment extends Sequelize.Model {
+    static initiate(sequelize) {
+        Comment.init({
+            comment: {
+                type: Sequelize.STRING(100),
+                allowNull: false,
+            },
+            created_at: {
+                type: Sequelize.DATE,
+                allowNull: true,
+                defaultValue: Sequelize.NOW,
+            },
+        }, {
+            sequelize,
+            timestamps: false,
+            modelName: 'Comment',
+            tableName: 'comments',
+            paranoid: false,
+            charset: 'utf8mb4',
+            collate: 'utf8mb4_general_ci',
+        });
+    }
 
-const sequelize = new Sequelize(config.database, config.username, config.password,config);
+    static associate(db) {
+        db.Comment.belongsTo(db.User, { foreignKey: 'commenter', targetKey: 'id' });
+    }
+};
 
-db.sequelize = sequelize;
-
-db.User = User;
-db.Comment = Comment;
-
-User.initiate(sequelize);
-Comment.initiate(sequelize);
-
-User.associate(db);
-Comment.associate(db);
-
-module.exports = db;
+module.exports = Comment;
